@@ -238,20 +238,59 @@
 
       <!-- ─ Timer Settings ─────────────────────────────────── -->
       <section class="panel-section" aria-label="Налаштування таймера">
-        <h2 class="panel-label">ТРИВАЛІСТЬ (ХВ)</h2>
-        <div class="settings-grid">
-          <div class="setting-item">
-            <label for="input-focus">ФОКУС</label>
-            <input id="input-focus" class="input-number" type="number" min="1" max="99" value="25" aria-label="Тривалість фокус-сесії в хвилинах" />
+        <h2 class="panel-label">НАЛАШТУВАННЯ</h2>
+        
+        <!-- Durations -->
+        <div class="settings-group">
+          <span class="settings-sublabel">ТРИВАЛІСТЬ (ХВ)</span>
+          <div class="settings-grid">
+            <div class="setting-item">
+              <label for="input-focus">ФОКУС</label>
+              <input id="input-focus" class="input-number" type="number" min="1" max="99" value="25" aria-label="Тривалість фокус-сесії в хвилинах" />
+            </div>
+            <div class="setting-item">
+              <label for="input-short">КОРОТКА</label>
+              <input id="input-short" class="input-number" type="number" min="1" max="99" value="5" aria-label="Тривалість короткої перерви в хвилинах" />
+            </div>
+            <div class="setting-item">
+              <label for="input-long">ДОВГА</label>
+              <input id="input-long" class="input-number" type="number" min="1" max="99" value="15" aria-label="Тривалість довгої перерви в хвилинах" />
+            </div>
           </div>
-          <div class="setting-item">
-            <label for="input-short">КОРОТКА</label>
-            <input id="input-short" class="input-number" type="number" min="1" max="99" value="5" aria-label="Тривалість короткої перерви в хвилинах" />
+        </div>
+
+        <!-- Sound Selection -->
+        <div class="settings-group">
+          <label for="select-sound" class="settings-sublabel">ЗВУК ЗАКІНЧЕННЯ</label>
+          <div class="select-wrapper">
+            <select id="select-sound" class="input-select">
+              <option value="bell">🔔 Дзвіночок</option>
+              <option value="digital">📟 Цифровий</option>
+              <option value="chime">🎸 Акустичний</option>
+              <option value="synth">🎛 Синтезатор</option>
+              <option value="mute">🔇 Без звуку</option>
+            </select>
           </div>
-          <div class="setting-item">
-            <label for="input-long">ДОВГА</label>
-            <input id="input-long" class="input-number" type="number" min="1" max="99" value="15" aria-label="Тривалість довгої перерви в хвилинах" />
+        </div>
+
+        <!-- Theme Selection -->
+        <div class="settings-group">
+          <label for="select-theme" class="settings-sublabel">ТЕМА ОФОРМЛЕННЯ</label>
+          <div class="select-wrapper">
+            <select id="select-theme" class="input-select">
+              <option value="wheat">🌾 Пшениця</option>
+              <option value="navy">🌊 Океан</option>
+              <option value="forest">🌲 Ліс</option>
+            </select>
           </div>
+        </div>
+
+        <!-- Auto cycle toggle -->
+        <div class="settings-group checkbox-group" style="margin-top: 4px;">
+          <label class="checkbox-label">
+            <input type="checkbox" id="check-auto-cycle" class="input-checkbox" />
+            <span class="checkbox-text">Автоматичний цикл</span>
+          </label>
         </div>
       </section>
 

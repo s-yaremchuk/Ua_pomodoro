@@ -37,6 +37,9 @@ function saveSettings(timer) {
     focus: timer.durations[MODE.FOCUS],
     short: timer.durations[MODE.SHORT],
     long:  timer.durations[MODE.LONG],
+    sound: els.selectSound?.value ?? 'bell',
+    theme: els.selectTheme?.value ?? 'wheat',
+    autoCycle: els.checkAutoCycle?.checked ?? false,
   }));
 }
 
@@ -82,6 +85,9 @@ const els = {
   inputFocus:       $('input-focus'),
   inputShort:       $('input-short'),
   inputLong:        $('input-long'),
+  selectSound:      $('select-sound'),
+  selectTheme:      $('select-theme'),
+  checkAutoCycle:   $('check-auto-cycle'),
 
   toast:            $('toast'),
 };
@@ -265,10 +271,18 @@ async function init() {
   if (settings.short) timer.setDuration(MODE.SHORT, settings.short);
   if (settings.long)  timer.setDuration(MODE.LONG,  settings.long);
 
+  // Apply new settings
+  timer.autoCycle = settings.autoCycle ?? false;
+  const activeTheme = settings.theme ?? 'wheat';
+  document.body.className = `theme-${activeTheme}`;
+
   // Sync settings inputs
   if (els.inputFocus) els.inputFocus.value = timer.durations[MODE.FOCUS];
   if (els.inputShort) els.inputShort.value = timer.durations[MODE.SHORT];
   if (els.inputLong)  els.inputLong.value  = timer.durations[MODE.LONG];
+  if (els.selectSound) els.selectSound.value = settings.sound ?? 'bell';
+  if (els.selectTheme) els.selectTheme.value = activeTheme;
+  if (els.checkAutoCycle) els.checkAutoCycle.checked = timer.autoCycle;
 
   // ── Timer callbacks ─────────────────────────────────────────
 
@@ -284,7 +298,8 @@ async function init() {
   };
 
   timer.onComplete = (mode) => {
-    playCompletionSound();
+    const settings = loadSettings();
+    playCompletionSound(settings.sound ?? 'bell');
     updateStartButton(false);
     // Flash effect
     if (els.timerDisplay) {
@@ -336,6 +351,27 @@ async function init() {
   els.inputLong?.addEventListener('change', () => {
     timer.setDuration(MODE.LONG, els.inputLong.value);
     saveSettings(timer);
+  });
+
+  // Sound selection preview & save
+  els.selectSound?.addEventListener('change', () => {
+    playCompletionSound(els.selectSound.value);
+    saveSettings(timer);
+  });
+
+  // Theme selection change & save
+  els.selectTheme?.addEventListener('change', () => {
+    const newTheme = els.selectTheme.value;
+    document.body.className = `theme-${newTheme}`;
+    saveSettings(timer);
+    showToast(`Тему змінено на "${els.selectTheme.options[els.selectTheme.selectedIndex].text}"`);
+  });
+
+  // Auto cycle toggle & save
+  els.checkAutoCycle?.addEventListener('change', () => {
+    timer.autoCycle = els.checkAutoCycle.checked;
+    saveSettings(timer);
+    showToast(timer.autoCycle ? '🔁 Автоматичний цикл увімкнено' : '⏹ Автоматичний цикл вимкнено');
   });
 
   // Keyboard shortcuts

@@ -76,8 +76,7 @@ const els = {
   trackStatus:      $('track-status'),
   trackArt:         $('track-art'),
 
-  playlistInput:    $('playlist-input'),
-  btnLoadPlaylist:  $('btn-load-playlist'),
+
 
   // Settings inputs
   inputFocus:       $('input-focus'),
@@ -386,24 +385,16 @@ async function init() {
   els.btnNext?.addEventListener('click',      () => nextTrack());
   els.btnPrev?.addEventListener('click',      () => previousTrack());
 
-  // Load playlist
-  els.btnLoadPlaylist?.addEventListener('click', async () => {
-    const uri = parsePlaylistUri(els.playlistInput?.value ?? '');
-    if (!uri) { showToast('❌ Невалідний URL плейлиста'); return; }
-    await playContext(uri);
-    showToast('▶ Плейлист завантажено');
-  });
 
-  // Playlist input — Enter key
-  els.playlistInput?.addEventListener('keydown', async (e) => {
-    if (e.key === 'Enter') els.btnLoadPlaylist?.click();
-  });
 
   // Spotify SDK callbacks
-  spotify.onReady = (dId) => {
+  spotify.onReady = async (dId) => {
     console.info('[Spotify] Player ready, device:', dId);
     showSpotifyPlayer();
     showToast('✅ Spotify підключено');
+
+    // Автоматично запускаємо статичний плейлист (lofi girl)
+    await playContext('spotify:playlist:0vvXsWCC9xrXsKd4BgS8ML');
   };
 
   spotify.onStateChange = (state) => {

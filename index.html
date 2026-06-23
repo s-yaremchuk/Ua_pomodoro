@@ -1,0 +1,295 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="Swiss-style Pomodoro таймер з Spotify інтеграцією — фокус, короткі та довгі перерви з музикою." />
+  <meta name="theme-color" content="#1A2744" />
+
+  <title>Pomodoro · Focus Timer</title>
+
+  <!-- Favicon — Swiss amber square -->
+  <link rel="icon" type="image/svg+xml" href="favicon.svg" />
+
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+
+<div class="app-wrapper">
+
+  <!-- ══════════════════════════════════════════════════════
+       HEADER
+  ═══════════════════════════════════════════════════════ -->
+  <header class="site-header" role="banner">
+    <div class="logo" aria-label="Pomodoro Timer">
+      POMODORO
+      <span class="logo-divider">·</span>
+      <span style="color: var(--off-white); opacity: 0.5;">FOCUS TIMER</span>
+    </div>
+
+    <div class="header-actions">
+      <!-- Fullscreen toggle -->
+      <button
+        id="btn-fullscreen"
+        class="btn-icon"
+        title="Повний екран (F)"
+        aria-label="Увімкнути повний екран"
+      >
+        <!-- Enter fullscreen icon -->
+        <svg class="icon-fullscreen-enter" width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true">
+          <path d="M1 6V1h5M10 1h5v5M15 10v5h-5M6 15H1v-5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+        <!-- Exit fullscreen icon -->
+        <svg class="icon-fullscreen-exit" width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true" style="display:none">
+          <path d="M6 1v5H1M15 6h-5V1M10 15v-5h5M1 10h5v5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+      </button>
+    </div>
+  </header>
+
+  <!-- ══════════════════════════════════════════════════════
+       MAIN
+  ═══════════════════════════════════════════════════════ -->
+  <main class="main-content" role="main">
+
+    <!-- ── LEFT: Timer ──────────────────────────────────── -->
+    <section class="timer-section fade-in" aria-label="Pomodoro таймер">
+
+      <!-- Mode tabs -->
+      <nav class="mode-tabs" role="tablist" aria-label="Режими таймера">
+        <button
+          class="mode-tab active"
+          role="tab"
+          aria-selected="true"
+          data-mode="FOCUS"
+          id="tab-focus"
+          aria-controls="timer-display"
+        >ФОКУС</button>
+        <button
+          class="mode-tab"
+          role="tab"
+          aria-selected="false"
+          data-mode="SHORT"
+          id="tab-short"
+          aria-controls="timer-display"
+        >КОРОТКА</button>
+        <button
+          class="mode-tab"
+          role="tab"
+          aria-selected="false"
+          data-mode="LONG"
+          id="tab-long"
+          aria-controls="timer-display"
+        >ДОВГА</button>
+      </nav>
+
+      <!-- Timer display — Swiss typographic anchor -->
+      <div class="timer-display-wrapper">
+        <div id="timer-label" class="timer-label" aria-live="polite">ФОКУС</div>
+
+        <div class="timer-ring-wrapper">
+          <div
+            id="timer-display"
+            class="timer-display"
+            role="timer"
+            aria-live="off"
+            aria-label="Залишилось часу"
+          >25:00</div>
+
+          <!-- Small SVG progress ring -->
+          <svg class="progress-ring" aria-hidden="true" viewBox="0 0 28 28">
+            <circle id="progress-ring-circle" cx="14" cy="14" r="12" />
+          </svg>
+        </div>
+
+        <!-- Progress bar (amber line) controlled via JS transform -->
+        <div id="progress-line" style="
+          width: 100%;
+          height: 4px;
+          background: var(--amber);
+          margin-top: var(--sp-3);
+          transform-origin: left;
+          transition: transform 0.25s linear;
+        " aria-hidden="true"></div>
+      </div>
+
+      <!-- Session count -->
+      <div class="session-pips" role="status" aria-label="Завершені сесії">
+        <span class="session-label">СЕСІЇ <span id="session-count">0</span></span>
+        <div class="pip" aria-hidden="true"></div>
+        <div class="pip" aria-hidden="true"></div>
+        <div class="pip" aria-hidden="true"></div>
+        <div class="pip" aria-hidden="true"></div>
+      </div>
+
+      <!-- Controls -->
+      <div class="timer-controls">
+        <button
+          id="btn-start-pause"
+          class="btn-primary"
+          aria-label="Запустити таймер"
+        >
+          <!-- Play icon -->
+          <svg class="icon-play" width="14" height="14" viewBox="0 0 14 14" fill="currentColor" aria-hidden="true">
+            <path d="M3 1.5l9 5.5-9 5.5V1.5z"/>
+          </svg>
+          <!-- Pause icon -->
+          <svg class="icon-pause" width="14" height="14" viewBox="0 0 14 14" fill="currentColor" aria-hidden="true" style="display:none">
+            <rect x="2" y="1.5" width="4" height="11" rx="1"/>
+            <rect x="8" y="1.5" width="4" height="11" rx="1"/>
+          </svg>
+          <span id="btn-start-label">СТАРТ</span>
+        </button>
+
+        <button id="btn-reset" class="btn-ghost" aria-label="Скинути таймер">
+          <svg width="14" height="14" viewBox="0 0 14 14" fill="none" aria-hidden="true">
+            <path d="M1 7a6 6 0 106-6H4M4 1L1 4l3 3" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+          &nbsp;СКИНУТИ
+        </button>
+      </div>
+
+      <!-- Keyboard hints -->
+      <div class="shortcut-hint" aria-hidden="true">
+        <kbd>ПРОБІЛ</kbd> старт/пауза &nbsp;&nbsp;
+        <kbd>R</kbd> скинути &nbsp;&nbsp;
+        <kbd>F</kbd> повний екран &nbsp;&nbsp;
+        <kbd>←</kbd><kbd>→</kbd> трек
+      </div>
+
+    </section>
+
+    <!-- ── RIGHT: Spotify + Settings ────────────────────── -->
+    <aside class="right-panel fade-in" style="animation-delay: 0.1s" aria-label="Spotify та налаштування">
+
+      <!-- ─ Spotify ──────────────────────────────────────── -->
+      <section class="panel-section" id="spotify-section" aria-label="Spotify плеєр">
+        <h2 class="panel-label">SPOTIFY</h2>
+
+        <!-- Login card (shown when not authenticated) -->
+        <div id="spotify-login-card" class="spotify-login-card">
+          <p>Підключіть Spotify Premium-акаунт щоб слухати музику прямо в таймері.</p>
+          <button id="btn-spotify-connect" class="btn-spotify" aria-label="Увійти через Spotify">
+            <!-- Spotify logo mark -->
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+              <path d="M12 0C5.4 0 0 5.4 0 12s5.4 12 12 12 12-5.4 12-12S18.66 0 12 0zm5.521 17.34c-.24.359-.66.48-1.021.24-2.82-1.74-6.36-2.101-10.561-1.141-.418.122-.779-.179-.899-.539-.12-.421.18-.78.54-.9 4.56-1.021 8.52-.6 11.64 1.32.42.18.479.659.301 1.02zm1.44-3.3c-.301.42-.841.6-1.262.3-3.239-1.98-8.159-2.58-11.939-1.38-.479.12-1.02-.12-1.14-.6-.12-.48.12-1.021.6-1.141C9.6 9.9 15 10.561 18.72 12.84c.361.181.54.78.241 1.2zm.12-3.36C15.24 8.4 8.82 8.16 5.16 9.301c-.6.179-1.2-.181-1.38-.721-.18-.601.18-1.2.72-1.381 4.26-1.26 11.28-1.02 15.721 1.621.539.3.719 1.02.419 1.56-.299.421-1.02.599-1.559.3z"/>
+            </svg>
+            ПІДКЛЮЧИТИ SPOTIFY
+          </button>
+        </div>
+
+        <!-- Player UI (shown after auth) -->
+        <div id="spotify-player-ui" class="spotify-player" style="display:none">
+
+          <!-- Now playing -->
+          <div class="now-playing" aria-live="polite" aria-atomic="true">
+            <img id="track-art" class="track-art" src="" alt="" style="display:none" />
+            <div class="track-art-placeholder" id="track-art-placeholder" aria-hidden="true">
+              <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
+                <circle cx="12" cy="12" r="10" stroke="var(--grey-dim)" stroke-width="1.5"/>
+                <circle cx="12" cy="12" r="3" fill="var(--grey-dim)"/>
+                <path d="M12 2a10 10 0 010 20" stroke="var(--grey-dim)" stroke-width="1.5" stroke-dasharray="3 3"/>
+              </svg>
+            </div>
+            <div class="track-info">
+              <div id="track-name"   class="track-name">Очікування...</div>
+              <div id="track-artist" class="track-artist">—</div>
+              <div id="track-status" class="track-status">⏸ ПАУЗА</div>
+            </div>
+            <button id="btn-spotify-logout" class="btn-icon" title="Від'єднати Spotify" aria-label="Вийти зі Spotify" style="flex-shrink:0">
+              <svg width="14" height="14" viewBox="0 0 14 14" fill="none" aria-hidden="true">
+                <path d="M5 7h8M10 4l3 3-3 3M5 1H2a1 1 0 00-1 1v10a1 1 0 001 1h3" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+              </svg>
+            </button>
+          </div>
+
+          <!-- Transport controls -->
+          <div class="transport-controls" role="group" aria-label="Управління відтворенням">
+            <button id="btn-sp-prev" class="btn-transport" aria-label="Попередній трек">
+              <svg width="18" height="18" viewBox="0 0 18 18" fill="currentColor" aria-hidden="true">
+                <path d="M3 3v12M15 3L7 9l8 6V3z"/>
+              </svg>
+            </button>
+
+            <button id="btn-sp-playpause" class="btn-transport play-pause" aria-label="Відтворити">
+              <svg class="icon-play" width="20" height="20" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
+                <path d="M5 3l12 7-12 7V3z"/>
+              </svg>
+              <svg class="icon-pause" width="20" height="20" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true" style="display:none">
+                <rect x="4" y="3" width="5" height="14" rx="1"/>
+                <rect x="11" y="3" width="5" height="14" rx="1"/>
+              </svg>
+            </button>
+
+            <button id="btn-sp-next" class="btn-transport" aria-label="Наступний трек">
+              <svg width="18" height="18" viewBox="0 0 18 18" fill="currentColor" aria-hidden="true">
+                <path d="M15 3v12M3 3l8 6-8 6V3z"/>
+              </svg>
+            </button>
+          </div>
+
+          <!-- Playlist input -->
+          <div class="playlist-input-group">
+            <label for="playlist-input">PLAYLIST URL / URI</label>
+            <div class="playlist-input-row">
+              <input
+                id="playlist-input"
+                class="input-spotify"
+                type="url"
+                placeholder="https://open.spotify.com/playlist/..."
+                aria-label="Spotify URL плейлиста"
+                autocomplete="off"
+                spellcheck="false"
+              />
+              <button id="btn-load-playlist" class="btn-load-playlist" aria-label="Завантажити плейлист">
+                ▶
+              </button>
+            </div>
+          </div>
+
+        </div>
+      </section>
+
+      <!-- ─ Timer Settings ─────────────────────────────────── -->
+      <section class="panel-section" aria-label="Налаштування таймера">
+        <h2 class="panel-label">ТРИВАЛІСТЬ (ХВ)</h2>
+        <div class="settings-grid">
+          <div class="setting-item">
+            <label for="input-focus">ФОКУС</label>
+            <input id="input-focus" class="input-number" type="number" min="1" max="99" value="25" aria-label="Тривалість фокус-сесії в хвилинах" />
+          </div>
+          <div class="setting-item">
+            <label for="input-short">КОРОТКА</label>
+            <input id="input-short" class="input-number" type="number" min="1" max="99" value="5" aria-label="Тривалість короткої перерви в хвилинах" />
+          </div>
+          <div class="setting-item">
+            <label for="input-long">ДОВГА</label>
+            <input id="input-long" class="input-number" type="number" min="1" max="99" value="15" aria-label="Тривалість довгої перерви в хвилинах" />
+          </div>
+        </div>
+      </section>
+
+    </aside>
+
+  </main>
+
+  <!-- ══════════════════════════════════════════════════════
+       FOOTER
+  ═══════════════════════════════════════════════════════ -->
+  <footer class="site-footer" role="contentinfo">
+    <span class="footer-info">UA POMODORO · 2025</span>
+    <div class="footer-shortcuts" aria-hidden="true">
+      <span class="footer-shortcut"><kbd>ПРОБІЛ</kbd> старт/пауза</span>
+      <span class="footer-shortcut"><kbd>R</kbd> скинути</span>
+      <span class="footer-shortcut"><kbd>F</kbd> fullscreen</span>
+    </div>
+  </footer>
+
+</div><!-- /.app-wrapper -->
+
+<!-- Toast notification -->
+<div id="toast" class="toast" role="alert" aria-live="assertive" aria-atomic="true"></div>
+
+<script type="module" src="app.js"></script>
+</body>
+</html>

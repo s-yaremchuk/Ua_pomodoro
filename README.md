@@ -31,7 +31,7 @@ Swiss-style Pomodoro таймер з інтеграцією **Spotify Web Playba
 npx serve . -l 3000
 ```
 
-Відкрийте: **http://localhost:3000**
+Відкрийте: **http://127.0.0.1:3000**
 
 > ⚠️ Не відкривайте `index.html` напряму через `file://` — ES Modules не працюють без HTTP сервера.
 
@@ -43,8 +43,9 @@ npx serve . -l 3000
 
 1. Зайдіть на [developer.spotify.com/dashboard](https://developer.spotify.com/dashboard)
 2. Створіть або відкрийте ваш додаток
-3. Додайте **Redirect URI**: `http://localhost:3000/callback`
-4. Скопіюйте **Client ID**
+3. Додайте **Redirect URI**: `http://127.0.0.1:3000/callback` (з квітня 2025 року Spotify більше не дозволяє додавати `localhost` безпосередньо як домен, тому обов'язково використовуйте IP-адресу `127.0.0.1`).
+4. Натисніть **Add**, а потім обов'язково натисніть **Save** внизу сторінки!
+5. Скопіюйте **Client ID**
 
 ### 2. Вставте Client ID у код
 

@@ -393,8 +393,8 @@ async function init() {
     showSpotifyPlayer();
     showToast('✅ Spotify підключено');
 
-    // Автоматично запускаємо статичний плейлист (lofi girl)
-    await playContext('spotify:playlist:0vvXsWCC9xrXsKd4BgS8ML');
+    // Автоматично запускаємо статичний плейлист користувача
+    await playContext('spotify:playlist:1w74rN3jQ2J2a3uMBH6p37');
   };
 
   spotify.onStateChange = (state) => {

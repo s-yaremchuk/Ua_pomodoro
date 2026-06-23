@@ -1,0 +1,849 @@
+/* ============================================================
+   SWISS POMODORO — Design System
+   Aesthetic: Swiss International / Constructivist
+   Palette: Deep Navy (dominant) · Vivid Amber (accent) · Off-White (neutral)
+   ============================================================ */
+
+@import url('https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Mono:ital,wght@0,300;0,400;0,500;1,400&family=Space+Grotesk:wght@300;400;500;600&display=swap');
+
+/* ---- Tokens ---- */
+:root {
+  /* Colors */
+  --navy:       #1A2744;
+  --navy-mid:   #1E2F52;
+  --navy-light: #243660;
+  --amber:      #F5C518;
+  --amber-dark: #D4A800;
+  --off-white:  #F2F0EB;
+  --grey-cool:  #8A9BBF;
+  --grey-dim:   #3D4F72;
+  --black:      #0D1526;
+
+  /* Typography */
+  --font-display: 'Bebas Neue', sans-serif;
+  --font-mono:    'DM Mono', monospace;
+  --font-ui:      'Space Grotesk', sans-serif;
+
+  /* Spacing (8px base grid) */
+  --sp-1:  8px;
+  --sp-2:  16px;
+  --sp-3:  24px;
+  --sp-4:  32px;
+  --sp-6:  48px;
+  --sp-8:  64px;
+  --sp-12: 96px;
+
+  /* Timer sizes */
+  --timer-size: clamp(120px, 22vw, 240px);
+
+  /* Transitions */
+  --ease-out:    cubic-bezier(0.16, 1, 0.3, 1);
+  --ease-spring: cubic-bezier(0.34, 1.56, 0.64, 1);
+  --dur-fast:    160ms;
+  --dur-mid:     300ms;
+  --dur-slow:    600ms;
+
+  /* Shadows */
+  --shadow-card: 0 4px 32px rgba(0,0,0,0.35), 0 1px 4px rgba(0,0,0,0.2);
+  --shadow-glow: 0 0 40px rgba(245, 197, 24, 0.15);
+}
+
+/* ---- Reset ---- */
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+html {
+  font-size: 16px;
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+}
+
+body {
+  background: var(--navy);
+  color: var(--off-white);
+  font-family: var(--font-ui);
+  min-height: 100dvh;
+  overflow-x: hidden;
+}
+
+/* ============================================================
+   LAYOUT — Swiss Grid
+   ============================================================ */
+.app-wrapper {
+  display: grid;
+  grid-template-rows: auto 1fr auto;
+  min-height: 100dvh;
+}
+
+/* Header */
+.site-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: var(--sp-3) var(--sp-6);
+  border-bottom: 1px solid var(--grey-dim);
+  position: relative;
+}
+
+.logo {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  font-weight: 500;
+  letter-spacing: 0.25em;
+  text-transform: uppercase;
+  color: var(--amber);
+  display: flex;
+  align-items: center;
+  gap: var(--sp-2);
+}
+
+.logo::before {
+  content: '';
+  display: block;
+  width: 10px;
+  height: 10px;
+  background: var(--amber);
+  border-radius: 50%;
+  animation: pulse-dot 2s ease-in-out infinite;
+}
+
+.logo .logo-divider {
+  color: var(--grey-dim);
+  margin: 0 4px;
+}
+
+.header-actions {
+  display: flex;
+  align-items: center;
+  gap: var(--sp-2);
+}
+
+/* Main content */
+.main-content {
+  display: grid;
+  grid-template-columns: 1fr 360px;
+  gap: 0;
+  max-width: 1400px;
+  width: 100%;
+  margin: 0 auto;
+  padding: var(--sp-6);
+  align-items: start;
+}
+
+/* ============================================================
+   TIMER SECTION — Swiss typographic anchor
+   ============================================================ */
+.timer-section {
+  display: flex;
+  flex-direction: column;
+  gap: var(--sp-6);
+  padding-right: var(--sp-8);
+  border-right: 1px solid var(--grey-dim);
+}
+
+/* Mode switcher tabs */
+.mode-tabs {
+  display: flex;
+  gap: 2px;
+  background: var(--black);
+  border: 1px solid var(--grey-dim);
+  border-radius: 4px;
+  padding: 3px;
+  width: fit-content;
+}
+
+.mode-tab {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  font-weight: 500;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--grey-cool);
+  background: transparent;
+  border: none;
+  padding: var(--sp-1) var(--sp-3);
+  border-radius: 2px;
+  cursor: pointer;
+  transition: color var(--dur-fast) var(--ease-out),
+              background var(--dur-fast) var(--ease-out);
+}
+
+.mode-tab:hover {
+  color: var(--off-white);
+}
+
+.mode-tab.active {
+  background: var(--amber);
+  color: var(--navy);
+  font-weight: 600;
+}
+
+/* The big timer display — Swiss typographic plakat */
+.timer-display-wrapper {
+  position: relative;
+}
+
+.timer-label {
+  font-family: var(--font-mono);
+  font-size: 10px;
+  letter-spacing: 0.3em;
+  text-transform: uppercase;
+  color: var(--grey-cool);
+  margin-bottom: var(--sp-2);
+}
+
+.timer-display {
+  font-family: var(--font-display);
+  font-size: var(--timer-size);
+  line-height: 0.9;
+  letter-spacing: -0.02em;
+  color: var(--off-white);
+  position: relative;
+  user-select: none;
+  transition: color var(--dur-mid) var(--ease-out);
+}
+
+/* Amber accent line under timer */
+.timer-display::after {
+  content: '';
+  display: block;
+  width: 100%;
+  height: 4px;
+  background: var(--amber);
+  margin-top: var(--sp-3);
+  transform-origin: left;
+  transform: scaleX(1);
+  transition: transform var(--dur-slow) linear;
+}
+
+.timer-display.running::after {
+  /* The line will be animated via JS inline style */
+}
+
+.timer-display.break-mode {
+  color: var(--amber);
+}
+
+/* Progress ring — Swiss precision circle */
+.timer-ring-wrapper {
+  position: relative;
+  width: fit-content;
+}
+
+.progress-ring {
+  position: absolute;
+  top: -12px;
+  right: -12px;
+  width: 28px;
+  height: 28px;
+  transform: rotate(-90deg);
+}
+
+.progress-ring circle {
+  fill: none;
+  stroke: var(--amber);
+  stroke-width: 2;
+  stroke-dasharray: 75.4; /* 2π × 12 */
+  stroke-dashoffset: 75.4;
+  stroke-linecap: round;
+  transition: stroke-dashoffset var(--dur-fast) linear;
+}
+
+/* Session pips */
+.session-pips {
+  display: flex;
+  gap: var(--sp-1);
+  align-items: center;
+}
+
+.session-label {
+  font-family: var(--font-mono);
+  font-size: 10px;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--grey-cool);
+  margin-right: var(--sp-1);
+}
+
+.pip {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: var(--grey-dim);
+  transition: background var(--dur-mid) var(--ease-spring),
+              transform var(--dur-mid) var(--ease-spring);
+}
+
+.pip.done {
+  background: var(--amber);
+  transform: scale(1.2);
+}
+
+/* Timer controls */
+.timer-controls {
+  display: flex;
+  align-items: center;
+  gap: var(--sp-3);
+}
+
+.btn-primary {
+  display: flex;
+  align-items: center;
+  gap: var(--sp-1);
+  font-family: var(--font-mono);
+  font-size: 13px;
+  font-weight: 500;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  color: var(--navy);
+  background: var(--amber);
+  border: none;
+  padding: var(--sp-2) var(--sp-6);
+  cursor: pointer;
+  transition: background var(--dur-fast), transform var(--dur-fast) var(--ease-spring);
+  clip-path: polygon(0 0, calc(100% - 8px) 0, 100% 8px, 100% 100%, 8px 100%, 0 calc(100% - 8px));
+}
+
+.btn-primary:hover {
+  background: var(--amber-dark);
+  transform: translateY(-1px);
+}
+
+.btn-primary:active {
+  transform: translateY(1px);
+}
+
+.btn-primary svg { pointer-events: none; }
+
+.btn-ghost {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: var(--font-mono);
+  font-size: 11px;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--grey-cool);
+  background: transparent;
+  border: 1px solid var(--grey-dim);
+  padding: var(--sp-2) var(--sp-3);
+  cursor: pointer;
+  transition: color var(--dur-fast), border-color var(--dur-fast), transform var(--dur-fast);
+}
+
+.btn-ghost:hover {
+  color: var(--off-white);
+  border-color: var(--grey-cool);
+  transform: translateY(-1px);
+}
+
+.btn-ghost:active { transform: translateY(1px); }
+
+/* Icon-only ghost button */
+.btn-icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 36px;
+  height: 36px;
+  color: var(--grey-cool);
+  background: transparent;
+  border: 1px solid var(--grey-dim);
+  border-radius: 2px;
+  cursor: pointer;
+  transition: color var(--dur-fast), border-color var(--dur-fast), background var(--dur-fast);
+}
+
+.btn-icon:hover {
+  color: var(--off-white);
+  border-color: var(--grey-cool);
+  background: rgba(255,255,255,0.04);
+}
+
+/* Keyboard shortcut hints */
+.shortcut-hint {
+  font-family: var(--font-mono);
+  font-size: 10px;
+  color: var(--grey-dim);
+  letter-spacing: 0.1em;
+}
+
+kbd {
+  display: inline-block;
+  font-family: var(--font-mono);
+  font-size: 10px;
+  background: var(--navy-light);
+  border: 1px solid var(--grey-dim);
+  border-bottom-width: 2px;
+  color: var(--grey-cool);
+  padding: 1px 5px;
+  border-radius: 3px;
+}
+
+/* ============================================================
+   RIGHT PANEL — Spotify + Settings
+   ============================================================ */
+.right-panel {
+  padding-left: var(--sp-6);
+  display: flex;
+  flex-direction: column;
+  gap: var(--sp-4);
+}
+
+.panel-section {
+  display: flex;
+  flex-direction: column;
+  gap: var(--sp-2);
+}
+
+.panel-label {
+  font-family: var(--font-mono);
+  font-size: 10px;
+  letter-spacing: 0.3em;
+  text-transform: uppercase;
+  color: var(--grey-cool);
+  border-bottom: 1px solid var(--grey-dim);
+  padding-bottom: var(--sp-1);
+}
+
+/* ============================================================
+   SPOTIFY PLAYER
+   ============================================================ */
+.spotify-login-card {
+  background: var(--navy-mid);
+  border: 1px solid var(--grey-dim);
+  padding: var(--sp-4);
+  display: flex;
+  flex-direction: column;
+  gap: var(--sp-3);
+  align-items: flex-start;
+}
+
+.spotify-login-card p {
+  font-size: 13px;
+  color: var(--grey-cool);
+  line-height: 1.6;
+}
+
+.btn-spotify {
+  display: flex;
+  align-items: center;
+  gap: var(--sp-2);
+  font-family: var(--font-mono);
+  font-size: 12px;
+  font-weight: 500;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--black);
+  background: #1DB954; /* Spotify green */
+  border: none;
+  padding: var(--sp-2) var(--sp-4);
+  cursor: pointer;
+  transition: background var(--dur-fast), transform var(--dur-fast);
+}
+
+.btn-spotify:hover {
+  background: #1ed760;
+  transform: translateY(-1px);
+}
+
+/* Player UI (shown after auth) */
+.spotify-player {
+  display: none;
+  flex-direction: column;
+  gap: var(--sp-3);
+}
+
+.spotify-player.visible { display: flex; }
+
+/* Now playing */
+.now-playing {
+  display: flex;
+  gap: var(--sp-2);
+  align-items: center;
+  background: var(--navy-mid);
+  border: 1px solid var(--grey-dim);
+  padding: var(--sp-2);
+}
+
+.track-art {
+  width: 52px;
+  height: 52px;
+  background: var(--navy-light);
+  border: 1px solid var(--grey-dim);
+  object-fit: cover;
+  flex-shrink: 0;
+}
+
+.track-art-placeholder {
+  width: 52px;
+  height: 52px;
+  background: var(--navy-light);
+  border: 1px solid var(--grey-dim);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.track-info {
+  min-width: 0;
+  flex: 1;
+}
+
+.track-name {
+  font-family: var(--font-ui);
+  font-size: 13px;
+  font-weight: 500;
+  color: var(--off-white);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.track-artist {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  color: var(--grey-cool);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  margin-top: 2px;
+}
+
+.track-status {
+  font-family: var(--font-mono);
+  font-size: 9px;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--amber);
+  margin-top: 4px;
+}
+
+/* Transport controls */
+.transport-controls {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--sp-2);
+}
+
+.btn-transport {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 40px;
+  height: 40px;
+  background: transparent;
+  border: 1px solid var(--grey-dim);
+  color: var(--grey-cool);
+  cursor: pointer;
+  border-radius: 2px;
+  transition: all var(--dur-fast);
+}
+
+.btn-transport:hover {
+  color: var(--off-white);
+  border-color: var(--grey-cool);
+  background: rgba(255,255,255,0.04);
+}
+
+.btn-transport.play-pause {
+  width: 52px;
+  height: 52px;
+  background: var(--amber);
+  border-color: var(--amber);
+  color: var(--navy);
+}
+
+.btn-transport.play-pause:hover {
+  background: var(--amber-dark);
+  border-color: var(--amber-dark);
+  color: var(--navy);
+  transform: scale(1.05);
+}
+
+/* Playlist input */
+.playlist-input-group {
+  display: flex;
+  flex-direction: column;
+  gap: var(--sp-1);
+}
+
+.playlist-input-group label {
+  font-family: var(--font-mono);
+  font-size: 10px;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--grey-cool);
+}
+
+.playlist-input-row {
+  display: flex;
+  gap: 2px;
+}
+
+.input-spotify {
+  flex: 1;
+  background: var(--black);
+  border: 1px solid var(--grey-dim);
+  color: var(--off-white);
+  font-family: var(--font-mono);
+  font-size: 11px;
+  padding: var(--sp-1) var(--sp-2);
+  outline: none;
+  transition: border-color var(--dur-fast);
+}
+
+.input-spotify::placeholder { color: var(--grey-dim); }
+.input-spotify:focus { border-color: var(--amber); }
+
+.btn-load-playlist {
+  font-family: var(--font-mono);
+  font-size: 10px;
+  font-weight: 500;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  background: var(--amber);
+  color: var(--navy);
+  border: none;
+  padding: var(--sp-1) var(--sp-2);
+  cursor: pointer;
+  transition: background var(--dur-fast);
+}
+
+.btn-load-playlist:hover { background: var(--amber-dark); }
+
+/* ============================================================
+   SETTINGS PANEL
+   ============================================================ */
+.settings-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: var(--sp-2);
+}
+
+.setting-item {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.setting-item label {
+  font-family: var(--font-mono);
+  font-size: 10px;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  color: var(--grey-cool);
+}
+
+.input-number {
+  background: var(--black);
+  border: 1px solid var(--grey-dim);
+  color: var(--off-white);
+  font-family: var(--font-mono);
+  font-size: 14px;
+  font-weight: 500;
+  padding: var(--sp-1) var(--sp-2);
+  width: 100%;
+  outline: none;
+  transition: border-color var(--dur-fast);
+}
+
+.input-number:focus { border-color: var(--amber); }
+
+/* ============================================================
+   FOOTER
+   ============================================================ */
+.site-footer {
+  border-top: 1px solid var(--grey-dim);
+  padding: var(--sp-2) var(--sp-6);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.footer-info {
+  font-family: var(--font-mono);
+  font-size: 10px;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  color: var(--grey-dim);
+}
+
+.footer-shortcuts {
+  display: flex;
+  gap: var(--sp-3);
+  align-items: center;
+}
+
+.footer-shortcut {
+  font-family: var(--font-mono);
+  font-size: 10px;
+  color: var(--grey-dim);
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+
+/* ============================================================
+   FULLSCREEN STATE
+   ============================================================ */
+:fullscreen .site-header,
+:fullscreen .site-footer,
+:fullscreen .right-panel {
+  display: none;
+}
+
+:fullscreen .main-content {
+  grid-template-columns: 1fr;
+  max-width: none;
+  padding: var(--sp-8);
+  height: 100dvh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+:fullscreen .timer-section {
+  border-right: none;
+  padding-right: 0;
+  align-items: center;
+  text-align: center;
+}
+
+:fullscreen .timer-display {
+  font-size: clamp(200px, 30vw, 380px);
+}
+
+:fullscreen .mode-tabs,
+:fullscreen .session-pips {
+  justify-content: center;
+}
+
+:fullscreen .timer-controls {
+  justify-content: center;
+}
+
+/* Also cover vendor prefixes */
+:-webkit-full-screen .site-header,
+:-webkit-full-screen .site-footer,
+:-webkit-full-screen .right-panel { display: none; }
+
+:-webkit-full-screen .main-content {
+  grid-template-columns: 1fr;
+  max-width: none;
+  padding: var(--sp-8);
+  height: 100dvh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+:-webkit-full-screen .timer-section {
+  border-right: none;
+  padding-right: 0;
+  align-items: center;
+  text-align: center;
+}
+
+:-webkit-full-screen .timer-display {
+  font-size: clamp(200px, 30vw, 380px);
+}
+
+/* ============================================================
+   ANIMATIONS
+   ============================================================ */
+@keyframes pulse-dot {
+  0%, 100% { opacity: 1; transform: scale(1); }
+  50%       { opacity: 0.4; transform: scale(0.7); }
+}
+
+@keyframes timer-running-pulse {
+  0%, 100% { opacity: 1; }
+  50%       { opacity: 0.85; }
+}
+
+.timer-display.running {
+  animation: timer-running-pulse 2s ease-in-out infinite;
+}
+
+@keyframes session-complete {
+  0%   { transform: scale(1); color: var(--off-white); }
+  30%  { transform: scale(1.04); color: var(--amber); }
+  100% { transform: scale(1); color: var(--off-white); }
+}
+
+.timer-display.complete {
+  animation: session-complete 0.5s var(--ease-spring) forwards;
+}
+
+/* Fade slide-in for panels */
+@keyframes fade-slide-in {
+  from { opacity: 0; transform: translateY(8px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+.fade-in {
+  animation: fade-slide-in var(--dur-slow) var(--ease-out) both;
+}
+
+/* ============================================================
+   RESPONSIVE
+   ============================================================ */
+@media (max-width: 900px) {
+  .main-content {
+    grid-template-columns: 1fr;
+    gap: var(--sp-6);
+  }
+
+  .timer-section {
+    padding-right: 0;
+    border-right: none;
+    border-bottom: 1px solid var(--grey-dim);
+    padding-bottom: var(--sp-6);
+  }
+
+  .right-panel {
+    padding-left: 0;
+  }
+}
+
+@media (max-width: 600px) {
+  .site-header { padding: var(--sp-2) var(--sp-3); }
+  .main-content { padding: var(--sp-3); }
+  .timer-display { font-size: clamp(96px, 28vw, 160px); }
+}
+
+/* ============================================================
+   NOTIFICATION TOAST
+   ============================================================ */
+.toast {
+  position: fixed;
+  bottom: var(--sp-4);
+  left: 50%;
+  transform: translateX(-50%) translateY(120%);
+  background: var(--navy-mid);
+  border: 1px solid var(--amber);
+  border-left-width: 3px;
+  color: var(--off-white);
+  font-family: var(--font-mono);
+  font-size: 12px;
+  letter-spacing: 0.1em;
+  padding: var(--sp-2) var(--sp-4);
+  z-index: 1000;
+  transition: transform var(--dur-mid) var(--ease-out);
+  pointer-events: none;
+  white-space: nowrap;
+}
+
+.toast.show {
+  transform: translateX(-50%) translateY(0);
+}
+
+/* ============================================================
+   SCROLLBAR
+   ============================================================ */
+::-webkit-scrollbar { width: 4px; }
+::-webkit-scrollbar-track { background: var(--navy); }
+::-webkit-scrollbar-thumb { background: var(--grey-dim); border-radius: 2px; }
+::-webkit-scrollbar-thumb:hover { background: var(--grey-cool); }

@@ -38,7 +38,6 @@ function saveSettings(timer) {
     short: timer.durations[MODE.SHORT],
     long:  timer.durations[MODE.LONG],
     sound: els.selectSound?.value ?? 'bell',
-    theme: els.selectTheme?.value ?? 'wheat',
     autoCycle: els.checkAutoCycle?.checked ?? false,
   }));
 }
@@ -86,8 +85,13 @@ const els = {
   inputShort:       $('input-short'),
   inputLong:        $('input-long'),
   selectSound:      $('select-sound'),
-  selectTheme:      $('select-theme'),
   checkAutoCycle:   $('check-auto-cycle'),
+  
+  // Settings modal & volume
+  btnSettingsToggle: $('btn-settings-toggle'),
+  btnSettingsClose:  $('btn-settings-close'),
+  settingsModal:     $('settings-modal'),
+  sliderVolume:      $('slider-volume'),
 
   toast:            $('toast'),
 };
@@ -273,15 +277,13 @@ async function init() {
 
   // Apply new settings
   timer.autoCycle = settings.autoCycle ?? false;
-  const activeTheme = settings.theme ?? 'wheat';
-  document.body.className = `theme-${activeTheme}`;
+  document.body.className = 'theme-wheat';
 
   // Sync settings inputs
   if (els.inputFocus) els.inputFocus.value = timer.durations[MODE.FOCUS];
   if (els.inputShort) els.inputShort.value = timer.durations[MODE.SHORT];
   if (els.inputLong)  els.inputLong.value  = timer.durations[MODE.LONG];
   if (els.selectSound) els.selectSound.value = settings.sound ?? 'bell';
-  if (els.selectTheme) els.selectTheme.value = activeTheme;
   if (els.checkAutoCycle) els.checkAutoCycle.checked = timer.autoCycle;
 
   // ── Timer callbacks ─────────────────────────────────────────
@@ -359,19 +361,32 @@ async function init() {
     saveSettings(timer);
   });
 
-  // Theme selection change & save
-  els.selectTheme?.addEventListener('change', () => {
-    const newTheme = els.selectTheme.value;
-    document.body.className = `theme-${newTheme}`;
-    saveSettings(timer);
-    showToast(`Тему змінено на "${els.selectTheme.options[els.selectTheme.selectedIndex].text}"`);
-  });
-
   // Auto cycle toggle & save
   els.checkAutoCycle?.addEventListener('change', () => {
     timer.autoCycle = els.checkAutoCycle.checked;
     saveSettings(timer);
     showToast(timer.autoCycle ? '🔁 Автоматичний цикл увімкнено' : '⏹ Автоматичний цикл вимкнено');
+  });
+
+  // Settings modal visibility handlers
+  els.btnSettingsToggle?.addEventListener('click', () => {
+    if (els.settingsModal) els.settingsModal.style.display = 'flex';
+  });
+
+  els.btnSettingsClose?.addEventListener('click', () => {
+    if (els.settingsModal) els.settingsModal.style.display = 'none';
+  });
+
+  els.settingsModal?.addEventListener('click', (e) => {
+    if (e.target === els.settingsModal) {
+      els.settingsModal.style.display = 'none';
+    }
+  });
+
+  // Spotify volume slider
+  els.sliderVolume?.addEventListener('input', (e) => {
+    const vol = e.target.value / 100;
+    setVolume(vol);
   });
 
   // Keyboard shortcuts

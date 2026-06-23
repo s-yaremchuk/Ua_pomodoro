@@ -49,8 +49,7 @@
 }
 
 /* ---- Themes ---- */
-/* Default theme (Wheat / Пшениця) */
-body, body.theme-wheat {
+body {
   --theme-accent: #F5C518;
   --theme-accent-dark: #D4A800;
   --theme-accent-glow: 0 0 16px rgba(245, 197, 24, 0.35);
@@ -59,36 +58,8 @@ body, body.theme-wheat {
   --theme-accent-glow-large: 0 6px 16px rgba(245, 197, 24, 0.35);
   --theme-vignette: radial-gradient(circle, rgba(13, 21, 38, 0.25) 30%, rgba(13, 21, 38, 0.75) 100%);
 }
-body.theme-wheat .bg-overlay {
+.bg-overlay {
   background-image: url('background.jpg');
-}
-
-/* Navy theme (Ocean / Класична) */
-body.theme-navy {
-  --theme-accent: #3B82F6;
-  --theme-accent-dark: #1D4ED8;
-  --theme-accent-glow: 0 0 16px rgba(59, 130, 246, 0.35);
-  --theme-accent-glow-small: 0 0 10px rgba(59, 130, 246, 0.25);
-  --theme-accent-glow-med: 0 4px 12px rgba(59, 130, 246, 0.2);
-  --theme-accent-glow-large: 0 6px 16px rgba(59, 130, 246, 0.35);
-  --theme-vignette: radial-gradient(circle, #0b111e 30%, #030712 100%);
-}
-body.theme-navy .bg-overlay {
-  display: none;
-}
-
-/* Forest theme (Misty forest / Ліс) */
-body.theme-forest {
-  --theme-accent: #A3E635;
-  --theme-accent-dark: #4D7C0F;
-  --theme-accent-glow: 0 0 16px rgba(163, 230, 53, 0.35);
-  --theme-accent-glow-small: 0 0 10px rgba(163, 230, 53, 0.25);
-  --theme-accent-glow-med: 0 4px 12px rgba(163, 230, 53, 0.2);
-  --theme-accent-glow-large: 0 6px 16px rgba(163, 230, 53, 0.35);
-  --theme-vignette: radial-gradient(circle, rgba(10, 22, 17, 0.25) 30%, rgba(10, 22, 17, 0.8) 100%);
-}
-body.theme-forest .bg-overlay {
-  background-image: url('forest.jpg');
 }
 
 /* ---- Reset ---- */
@@ -180,7 +151,7 @@ body {
   font-size: 14px;
   font-weight: 700;
   padding: 2px 8px;
-  border-radius: 4px;
+  border-radius: 0;
   letter-spacing: 0.05em;
   display: inline-flex;
   align-items: center;
@@ -217,7 +188,7 @@ body {
   backdrop-filter: blur(20px);
   -webkit-backdrop-filter: blur(20px);
   border: 1px solid rgba(255, 255, 255, 0.08);
-  border-radius: 20px;
+  border-radius: 0;
   padding: var(--sp-6) var(--sp-8);
   box-shadow: var(--shadow-card);
 }
@@ -228,7 +199,7 @@ body {
   gap: 2px;
   background: rgba(13, 21, 38, 0.5);
   border: 1px solid rgba(255, 255, 255, 0.08);
-  border-radius: 8px;
+  border-radius: 0;
   padding: 4px;
   width: fit-content;
 }
@@ -243,7 +214,7 @@ body {
   background: transparent;
   border: none;
   padding: var(--sp-1) var(--sp-3);
-  border-radius: 2px;
+  border-radius: 0;
   cursor: pointer;
   transition: color var(--dur-fast) var(--ease-out),
               background var(--dur-fast) var(--ease-out);
@@ -380,7 +351,7 @@ body {
   background: var(--amber);
   border: none;
   padding: var(--sp-2) var(--sp-6);
-  border-radius: 8px;
+  border-radius: 0;
   cursor: pointer;
   transition: background var(--dur-fast), transform var(--dur-fast) var(--ease-spring), box-shadow var(--dur-fast);
 }
@@ -409,7 +380,7 @@ body {
   background: rgba(255, 255, 255, 0.03);
   border: 1px solid rgba(255, 255, 255, 0.1);
   padding: var(--sp-2) var(--sp-3);
-  border-radius: 8px;
+  border-radius: 0;
   cursor: pointer;
   transition: all var(--dur-fast);
 }
@@ -433,7 +404,7 @@ body {
   color: var(--grey-cool);
   background: rgba(255, 255, 255, 0.03);
   border: 1px solid rgba(255, 255, 255, 0.1);
-  border-radius: 8px;
+  border-radius: 0;
   cursor: pointer;
   transition: all var(--dur-fast);
 }
@@ -461,7 +432,7 @@ kbd {
   border-bottom-width: 2px;
   color: var(--grey-cool);
   padding: 1px 5px;
-  border-radius: 3px;
+  border-radius: 0;
 }
 
 /* ============================================================
@@ -481,7 +452,7 @@ kbd {
   backdrop-filter: blur(20px);
   -webkit-backdrop-filter: blur(20px);
   border: 1px solid rgba(255, 255, 255, 0.08);
-  border-radius: 20px;
+  border-radius: 0;
   padding: var(--sp-6);
   box-shadow: var(--shadow-card);
 }
@@ -502,7 +473,7 @@ kbd {
 .spotify-login-card {
   background: rgba(255, 255, 255, 0.03);
   border: 1px solid rgba(255, 255, 255, 0.06);
-  border-radius: 12px;
+  border-radius: 0;
   padding: var(--sp-4);
   display: flex;
   flex-direction: column;
@@ -529,7 +500,7 @@ kbd {
   background: #1DB954; /* Spotify green */
   border: none;
   padding: var(--sp-2) var(--sp-4);
-  border-radius: 6px;
+  border-radius: 0;
   cursor: pointer;
   transition: background var(--dur-fast), transform var(--dur-fast);
 }
@@ -555,7 +526,7 @@ kbd {
   align-items: center;
   background: rgba(255, 255, 255, 0.03);
   border: 1px solid rgba(255, 255, 255, 0.06);
-  border-radius: 12px;
+  border-radius: 0;
   padding: var(--sp-3);
 }
 
@@ -564,7 +535,7 @@ kbd {
   height: 52px;
   background: rgba(255, 255, 255, 0.05);
   border: 1px solid rgba(255, 255, 255, 0.08);
-  border-radius: 8px;
+  border-radius: 0;
   object-fit: cover;
   flex-shrink: 0;
 }
@@ -574,7 +545,7 @@ kbd {
   height: 52px;
   background: rgba(255, 255, 255, 0.05);
   border: 1px solid rgba(255, 255, 255, 0.08);
-  border-radius: 8px;
+  border-radius: 0;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -633,7 +604,7 @@ kbd {
   border: 1px solid rgba(255, 255, 255, 0.1);
   color: var(--grey-cool);
   cursor: pointer;
-  border-radius: 50%;
+  border-radius: 0;
   transition: all var(--dur-fast);
 }
 
@@ -736,7 +707,7 @@ kbd {
 .input-number {
   background: rgba(13, 21, 38, 0.45);
   border: 1px solid rgba(255, 255, 255, 0.08);
-  border-radius: 8px;
+  border-radius: 0;
   color: var(--off-white);
   font-family: var(--font-mono);
   font-size: 14px;
@@ -951,7 +922,7 @@ kbd {
    ============================================================ */
 ::-webkit-scrollbar { width: 4px; }
 ::-webkit-scrollbar-track { background: var(--navy); }
-::-webkit-scrollbar-thumb { background: var(--grey-dim); border-radius: 2px; }
+::-webkit-scrollbar-thumb { background: var(--grey-dim); border-radius: 0; }
 ::-webkit-scrollbar-thumb:hover { background: var(--grey-cool); }
 
 /* ============================================================
@@ -991,7 +962,7 @@ kbd {
 .input-select {
   background: rgba(13, 21, 38, 0.45);
   border: 1px solid rgba(255, 255, 255, 0.08);
-  border-radius: 8px;
+  border-radius: 0;
   color: var(--off-white);
   font-family: var(--font-mono);
   font-size: 12px;
@@ -1032,4 +1003,112 @@ kbd {
   height: 16px;
   accent-color: var(--theme-accent);
   cursor: pointer;
+}
+
+/* ============================================================
+   SETTINGS MODAL OVERLAY
+   ============================================================ */
+.modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background: rgba(9, 13, 22, 0.7);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 2000;
+}
+
+.modal-card {
+  background: rgba(19, 27, 43, 0.85);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  padding: var(--sp-6);
+  width: 100%;
+  max-width: 400px;
+  box-shadow: var(--shadow-card);
+  display: flex;
+  flex-direction: column;
+  gap: var(--sp-4);
+  border-radius: 0;
+}
+
+.modal-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+  padding-bottom: var(--sp-2);
+}
+
+.modal-title {
+  font-family: var(--font-mono);
+  font-size: 12px;
+  letter-spacing: 0.2em;
+  color: var(--off-white);
+}
+
+.btn-icon-close {
+  background: transparent;
+  border: none;
+  color: var(--grey-cool);
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 24px;
+  height: 24px;
+  transition: color var(--dur-fast);
+}
+
+.btn-icon-close:hover {
+  color: var(--off-white);
+}
+
+/* ============================================================
+   SPOTIFY VOLUME SLIDER
+   ============================================================ */
+.volume-control {
+  display: flex;
+  align-items: center;
+  gap: var(--sp-2);
+  margin-top: var(--sp-3);
+  padding: 0 var(--sp-1);
+}
+
+.volume-control svg {
+  color: var(--grey-cool);
+  flex-shrink: 0;
+}
+
+.input-range {
+  flex: 1;
+  -webkit-appearance: none;
+  appearance: none;
+  background: rgba(255, 255, 255, 0.1);
+  height: 4px;
+  outline: none;
+  cursor: pointer;
+}
+
+.input-range::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 12px;
+  height: 12px;
+  background: var(--amber);
+  cursor: pointer;
+  border-radius: 0;
+}
+
+.input-range::-moz-range-thumb {
+  width: 12px;
+  height: 12px;
+  background: var(--amber);
+  cursor: pointer;
+  border: none;
+  border-radius: 0;
 }

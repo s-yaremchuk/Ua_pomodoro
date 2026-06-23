@@ -20,7 +20,7 @@
 // Redirect URI must be registered in your Spotify App settings
 // ─────────────────────────────────────────────────────────────────
 const CLIENT_ID   = 'ccd9f766270e40abb1298f961888decf'; // ← замінити на ваш Client ID
-const REDIRECT_URI = window.location.origin + '/callback';
+const REDIRECT_URI = window.location.origin + window.location.pathname;
 const SCOPES = [
   'streaming',
   'user-read-email',

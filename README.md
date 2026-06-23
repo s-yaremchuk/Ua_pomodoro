@@ -43,28 +43,22 @@ npx serve . -l 3000
 
 1. Зайдіть на [developer.spotify.com/dashboard](https://developer.spotify.com/dashboard)
 2. Створіть або відкрийте ваш додаток
-3. Додайте **Redirect URI**: `http://127.0.0.1:3000/callback` (з квітня 2025 року Spotify більше не дозволяє додавати `localhost` безпосередньо як домен, тому обов'язково використовуйте IP-адресу `127.0.0.1`).
+3. Додайте **Redirect URI**: `http://127.0.0.1:3000/` (з квітня 2025 року Spotify більше не дозволяє додавати `localhost` безпосередньо як домен, тому обов'язково використовуйте IP-адресу `127.0.0.1`. Ми прибрали `/callback`, щоб уникнути помилки 404 на статичному сервері).
 4. Натисніть **Add**, а потім обов'язково натисніть **Save** внизу сторінки!
 5. Скопіюйте **Client ID**
 
 ### 2. Вставте Client ID у код
 
-Відкрийте `spotify.js` і замініть:
+Відкрийте `spotify.js` і переконайтеся, що вказано ваш реальний Client ID:
 ```js
-const CLIENT_ID = 'YOUR_SPOTIFY_CLIENT_ID';
+const CLIENT_ID   = 'ccd9f766270e40abb1298f961888decf';
 ```
-на ваш реальний Client ID.
 
 ### 3. Для GitHub Pages
 
-Додайте ще один Redirect URI у Spotify Dashboard:
-```
-https://<ваш-username>.github.io/<назва-репо>/callback
-```
-
-І оновіть `REDIRECT_URI` у `spotify.js`:
-```js
-const REDIRECT_URI = 'https://<ваш-username>.github.io/<назва-репо>/callback';
+Додайте ще один Redirect URI у Spotify Dashboard (код автоматично визначить адресу сайту):
+```text
+https://<ваш-username>.github.io/<назва-репо>/
 ```
 
 > **Вимога:** Spotify Premium акаунт для Web Playback SDK.

@@ -337,7 +337,7 @@ body {
 }
 
 .btn-primary:hover {
-  background: transparent;
+  background: var(--navy);
   color: var(--amber);
   transform: translateY(-2px);
   box-shadow: var(--theme-accent-glow);

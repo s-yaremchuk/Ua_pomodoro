@@ -12,6 +12,14 @@
   --navy:       #131B2E;
   --navy-mid:   #18233C;
   --navy-light: #212E4E;
+  --theme-accent: #E5A93B; /* Warm honey/sunset gold matching wheat field */
+  --theme-accent-dark: #C58D2A;
+  --theme-accent-glow: 0 0 16px rgba(229, 169, 59, 0.35);
+  --theme-accent-glow-small: 0 0 10px rgba(229, 169, 59, 0.25);
+  --theme-accent-glow-med: 0 4px 12px rgba(229, 169, 59, 0.2);
+  --theme-accent-glow-large: 0 6px 16px rgba(229, 169, 59, 0.35);
+  --theme-vignette: radial-gradient(circle, rgba(8, 14, 28, 0.15) 30%, rgba(8, 14, 28, 0.75) 100%);
+  
   --amber:      var(--theme-accent);
   --amber-dark: var(--theme-accent-dark);
   --off-white:  #F5F3ED;
@@ -46,17 +54,6 @@
   /* Shadows */
   --shadow-card: 0 8px 32px rgba(0,0,0,0.35), 0 1px 4px rgba(0,0,0,0.2);
   --shadow-glow: var(--theme-accent-glow);
-}
-
-/* ---- Themes ---- */
-body {
-  --theme-accent: #E5A93B; /* Warm honey/sunset gold matching wheat field */
-  --theme-accent-dark: #C58D2A;
-  --theme-accent-glow: 0 0 16px rgba(229, 169, 59, 0.35);
-  --theme-accent-glow-small: 0 0 10px rgba(229, 169, 59, 0.25);
-  --theme-accent-glow-med: 0 4px 12px rgba(229, 169, 59, 0.2);
-  --theme-accent-glow-large: 0 6px 16px rgba(229, 169, 59, 0.35);
-  --theme-vignette: radial-gradient(circle, rgba(8, 14, 28, 0.15) 30%, rgba(8, 14, 28, 0.75) 100%);
 }
 
 /* ---- Reset ---- */
